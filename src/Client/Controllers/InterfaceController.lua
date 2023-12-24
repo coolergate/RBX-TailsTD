@@ -3,16 +3,22 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local InterfaceController = {}
-local OriginalInterfaceStates = {} :: {[ScreenGui]: boolean}
 
 function InterfaceController:Start()
 	local player = Players.LocalPlayer
 	local playergui = player:WaitForChild("PlayerGui") :: PlayerGui
 	local leaderstats = player:WaitForChild("leaderstats") :: Folder
 
-	-- ---------------- Re-enable screenguis from original state ---------------- --
-	for ScreenGui, Enabled in OriginalInterfaceStates do
-		ScreenGui.Enabled = Enabled
+	-- ---------------------------- Clone interfaces ---------------------------- --
+	local content = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("interface", ReplicatedStorage):GetChildren() :: {[string]: Instance}
+	for _, inst in content do
+		if not inst:IsA("ScreenGui") then continue end
+		
+		local clone = inst:Clone() :: ScreenGui
+		clone.Enabled = false
+		clone.IgnoreGuiInset = true
+		clone.ResetOnSpawn = false
+		clone.Parent = playergui
 	end
 
 	-- ------------------------------- Default HUD ------------------------------ --
@@ -50,19 +56,7 @@ function InterfaceController:Start()
 end
 
 function InterfaceController:Init()
-	-- ---------------------------- Clone interfaces ---------------------------- --
-	local content = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("interface", ReplicatedStorage):GetChildren() :: {[string]: Instance}
-	for _, inst in content do
-		if not inst:IsA("ScreenGui") then continue end
-		
-		local clone = inst:Clone() :: ScreenGui
-		clone.Enabled = false
-		clone.IgnoreGuiInset = true
-		clone.ResetOnSpawn = false
-		clone.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-
-		OriginalInterfaceStates[clone] = clone.Enabled
-	end
+	
 end
 
 
