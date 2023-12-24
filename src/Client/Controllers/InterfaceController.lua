@@ -15,7 +15,7 @@ function InterfaceController:Start()
 		if not inst:IsA("ScreenGui") then continue end
 		
 		local clone = inst:Clone() :: ScreenGui
-		clone.Enabled = false
+		clone.Enabled = true
 		clone.IgnoreGuiInset = true
 		clone.ResetOnSpawn = false
 		clone.Parent = playergui
@@ -35,7 +35,7 @@ function InterfaceController:Start()
 		camera.FieldOfView = 1
 		camera.CFrame = CFrame.new(0, 0, 70);
 
-		local mesh = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("Models"):WaitForChild("TRING"):Clone() :: MeshPart
+		local mesh = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("Models", ReplicatedStorage):WaitForChild("TRING"):Clone() :: MeshPart
 		mesh.Parent = viewport
 
 		viewport.CurrentCamera = camera
