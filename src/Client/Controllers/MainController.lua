@@ -15,7 +15,7 @@ function MainController:Start()
 		shopchar_animation.AnimationId = "rbxassetid://15591537556";
 		shopchar_animation.Parent = workspace
 
-		local loaded_animation = shopchar_animator.LoadAnimation(shopchar_animation);
+		local loaded_animation = shopchar_animator:LoadAnimation(shopchar_animation);
 		loaded_animation.Priority = Enum.AnimationPriority.Action4;
 		loaded_animation.Looped = true;
 		loaded_animation:Play();
