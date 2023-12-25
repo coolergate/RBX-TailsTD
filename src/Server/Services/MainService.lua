@@ -19,6 +19,9 @@ function MainService:Init()
 
 		inst.Parent = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("interface", ReplicatedStorage)
 	end
+
+	-- debug purposes
+	self.Shared.EnvironmentSettings:SetMultiplayerMode(false)
 end
 
 
