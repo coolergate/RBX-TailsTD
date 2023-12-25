@@ -23,6 +23,47 @@ function InterfaceController:Start()
 
 	-- ------------------------------- Default HUD ------------------------------ --
 	local InterfaceHud = playergui:WaitForChild("Interface") :: ScreenGui
+
+	-- ----------------------------- Shop interface ----------------------------- --
+	if not self.Shared.EnvironmentSettings:IsMultiplayer() then
+		local shopgui = playergui:WaitForChild("Shop") :: ScreenGui
+		local shopwindow = shopgui.Window :: Frame
+		local shop_closebtn = shopwindow.CloseButton :: TextButton
+		local shopcontent = shopwindow.Content :: ScrollingFrame
+		local proximityPrompt: ProximityPrompt
+		
+		shop_closebtn.Activated:Connect(function(inputObject, clickCount)
+			shopgui.Enabled = false
+			proximityPrompt.Enabled = true
+		end)
+		
+		local shop_prefab = shopcontent.Prefab :: ShopPrefabContent
+		shop_prefab.Visible = false
+
+		type ShopPrefabContent = Frame & {
+			BuyButton: TextButton;
+			Image: ImageLabel;
+			Name: TextLabel;
+			Price: TextLabel;
+		}
+
+		-- -------------------------- Shop proximity prompt ------------------------- --
+		local part = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("Objects", workspace):WaitForChild("ShopPart") :: Part
+
+		proximityPrompt = Instance.new("ProximityPrompt")
+		proximityPrompt.Name = "ProximityPrompt"
+		proximityPrompt.Parent = part
+		proximityPrompt.ActionText = "Open"
+		proximityPrompt.GamepadKeyCode = Enum.KeyCode.ButtonY
+		proximityPrompt.MaxActivationDistance = 8
+		proximityPrompt.ObjectText = "Tower shop"
+		proximityPrompt.RequiresLineOfSight = false
+
+		proximityPrompt.Triggered:Connect(function()
+			proximityPrompt.Enabled = false
+			shopgui.Enabled = true
+		end)
+	end
 	
 	-- ----------------------------- TRINGs counter ----------------------------- --
 	local cashcount = leaderstats:WaitForChild("Cash") :: NumberValue
