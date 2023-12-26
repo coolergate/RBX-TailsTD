@@ -1,4 +1,5 @@
 local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
 
 local CharacterController = {}
 
@@ -19,15 +20,15 @@ function CharacterController:Init()
 
 	local animation_walk = Instance.new("Animation");
 	animation_walk.Parent = workspace
-	animation_walk.AnimationId = "rbxassetid://15647243921"
+	animation_walk.AnimationId = "rbxassetid://15753138656"
 
 	local animation_jump = Instance.new("Animation");
 	animation_jump.Parent = workspace
-	animation_jump.AnimationId = "rbxassetid://15647303276"
+	animation_jump.AnimationId = "rbxassetid://15753222668"
 
 	local animation_idle = Instance.new("Animation");
 	animation_idle.Parent = workspace
-	animation_idle.AnimationId = "rbxassetid://15647357707"
+	animation_idle.AnimationId = "rbxassetid://15753213933"
 
 	local function HandleCharacter()
 		local char = player.Character or player.CharacterAdded:Wait()
@@ -40,7 +41,6 @@ function CharacterController:Init()
 		idle.Priority = Enum.AnimationPriority.Action
 
 		walk.Looped = true
-		jump.Looped = true
 		idle.Looped = true
 
 		humanoid.Jumping:Connect(function(active)
@@ -49,7 +49,7 @@ function CharacterController:Init()
 		humanoid:GetPropertyChangedSignal("MoveDirection"):Connect(function()
 			local movement = humanoid.MoveDirection
 			if movement.Magnitude > 0 then
-				walk:Play()
+				if not walk.IsPlaying then walk:Play() end
 			else
 				walk:Stop()
 			end
