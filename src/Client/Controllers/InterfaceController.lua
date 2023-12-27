@@ -24,6 +24,12 @@ function InterfaceController:Start()
 	-- ------------------------------- Default HUD ------------------------------ --
 	local InterfaceHud = playergui:WaitForChild("Interface") :: ScreenGui
 
+	--// Debug queue
+	local testbutton = InterfaceHud.JoinQueueTestButton :: TextButton
+	testbutton.Activated:Connect(function(inputObject, clickCount)
+		self.Services.MainService:JoinQueue()
+	end)
+
 	-- ----------------------------- Shop interface ----------------------------- --
 	if not self.Shared.EnvironmentSettings:IsMultiplayer() then
 		local shopgui = playergui:WaitForChild("Shop") :: ScreenGui
