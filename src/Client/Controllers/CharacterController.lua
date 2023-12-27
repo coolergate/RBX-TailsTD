@@ -1,5 +1,4 @@
 local Players = game:GetService("Players")
-local RunService = game:GetService("RunService")
 
 local CharacterController = {}
 
@@ -12,10 +11,6 @@ function CharacterController:ResetCharacter()
 end
 
 function CharacterController:Start()
-	
-end
-
-function CharacterController:Init()
 	local player = Players.LocalPlayer
 
 	local animation_walk = Instance.new("Animation");
@@ -52,14 +47,19 @@ function CharacterController:Init()
 				if not walk.IsPlaying then walk:Play() end
 			else
 				walk:Stop()
+				idle:Play()
 			end
 		end)
 
+		task.wait(1)
 		idle:Play()
 	end
 	HandleCharacter()
 
 	player.CharacterAdded:Connect(HandleCharacter)
+end
+
+function CharacterController:Init()
 end
 
 
