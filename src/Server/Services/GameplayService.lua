@@ -84,8 +84,8 @@ function GameplayService:CreateQueue()
 	local queue: QueueRoom = {
 		id = HttpService:GenerateGUID(false),
 		players = {},
-		max_players = 1,
-		kill_time = GetCurrentTime() + 12,
+		max_players = 4,
+		kill_time = GetCurrentTime() + 15,
 		selected_map = math.random(1, #ReplicatedStorage:WaitForChild("Maps"):GetChildren()) or "",
 	}
 
