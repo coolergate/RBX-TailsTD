@@ -7,7 +7,7 @@ function MainController:Start()
 	local player = Players.LocalPlayer
 
 	-- --------------------------- Play shop animation -------------------------- --
-	do
+	if self.Shared.EnvironmentSettings:IsMultiplayer() then
 		local shopchar = self.Shared.EnvironmentFoldersModule:GetReplicatedFolder("Objects", workspace):WaitForChild("ShopCharacter") :: Model
 		local shopchar_animator = shopchar:WaitForChild("Humanoid"):WaitForChild("Animator") :: Animator
 

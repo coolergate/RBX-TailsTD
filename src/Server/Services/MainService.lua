@@ -1,4 +1,3 @@
-local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local StarterGui = game:GetService("StarterGui")
 
@@ -6,17 +5,9 @@ local MainService = {
 	Client = {}
 }
 
-function MainService.Client:JoinQueue(user: Player, queueid: string)
-	local testqueue = MainService.Services.LobbyService:CreateQueue()
-
-	testqueue.AddPlayer(user)
-	testqueue.Teleport()
-end
-
 function MainService:Start()
 	
 end
-
 
 function MainService:Init()
 	-- -------------------- Remove interfaces from startergui ------------------- --

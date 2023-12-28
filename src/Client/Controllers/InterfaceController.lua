@@ -26,19 +26,29 @@ function InterfaceController:Start()
 
 	--// Debug queue
 	local testbutton = InterfaceHud.JoinQueueTestButton :: TextButton
-	testbutton.Activated:Connect(function(inputObject, clickCount)
-		self.Services.MainService:JoinQueue()
+	testbutton.Activated:Connect(function()
+		local queue_list = self.Services.GameplayService:GetQueues()
+		print(queue_list)
+
+		for index, queue in queue_list do
+			self.Services.GameplayService:JoinQueue(queue.id)
+			break
+		end
 	end)
 
 	-- ----------------------------- Shop interface ----------------------------- --
-	if not self.Shared.EnvironmentSettings:IsMultiplayer() then
-		local shopgui = playergui:WaitForChild("Shop") :: ScreenGui
+	local shopgui = playergui:WaitForChild("Shop") :: ScreenGui
+	if self.Shared.EnvironmentSettings:IsMultiplayer() then
+		shopgui:Destroy()
+	else
 		local shopwindow = shopgui.Window :: Frame
 		local shop_closebtn = shopwindow.CloseButton :: TextButton
 		local shopcontent = shopwindow.Content :: ScrollingFrame
 		local proximityPrompt: ProximityPrompt
+
+		shopgui.Enabled = false
 		
-		shop_closebtn.Activated:Connect(function(inputObject, clickCount)
+		shop_closebtn.Activated:Connect(function()
 			shopgui.Enabled = false
 			proximityPrompt.Enabled = true
 		end)
